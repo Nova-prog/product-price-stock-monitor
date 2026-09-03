@@ -1,28 +1,87 @@
 # product-price-stock-monitor
 
-Monitor public product price, stock, and delivery information, then export CSV and Excel files.
+商品の公開価格・在庫・納期を確認し、CSVとExcelに記録するPythonツールです。
 
-This is a small Python tool for tracking products listed on public shopping or supplier websites. It is intended for lightweight personal or internal use, such as checking lab consumables, office supplies, tools, or other regularly purchased items.
+実験用手袋やキムワイプなど、継続して購入する消耗品の確認を想定しています。
 
-## Features
+## 動作環境
 
-- Reads target products from `products.csv`
-- Checks public product pages
-- Records price, stock, and delivery information when available
-- Writes the latest result to CSV
-- Appends historical results to CSV
-- Exports an Excel workbook
-- Can be run manually or daily with Windows Task Scheduler
+- Windows
+- Python 3.10以上
+- インターネット接続
 
-## Requirements
+## ファイル構成
 
-- Python 3.10 or later
-- Windows, macOS, or Linux
-- Python packages listed in `requirements.txt`
+- monitor.py：情報の取得とCSV・Excelへの出力
+- products.csv：確認する商品の設定
+- requirements.txt：必要なPythonライブラリ
+- run_daily.bat：Windows用の実行ファイル
 
-## Installation
+## 初期設定
 
-Clone or download this repository, then install dependencies.
+プロジェクトのフォルダーでコマンドプロンプトを開き、順番に実行します。
 
-```bash
-python -m pip install -r requirements.txt
+    python -m venv .venv
+    .venv\Scripts\python.exe -m pip install -r requirements.txt
+
+## 商品の設定
+
+products.csvに確認する商品を記入します。
+
+    name,url,site,unit,enabled
+    Sample product,https://example.com/product,generic,1 box,false
+
+- name：管理用の商品名
+- url：商品ページのURL
+- site：サイトの識別名。対応する値は実装に依存します
+- unit：管理用の購入単位
+- enabled：確認する場合はtrue、対象外にする場合はfalse
+
+上記のURLは記入例です。実際の商品ページに変更してください。
+
+unitは管理用のラベルです。「1 box」と記入しても、価格が自動的に1箱当たりに換算されるわけではありません。商品ページの販売単位を確認してください。
+
+## 実行方法
+
+プロジェクトのフォルダーで、次のコマンドを実行します。
+
+    .venv\Scripts\python.exe monitor.py
+
+run_daily.batからも実行できます。
+
+## 毎日の自動実行
+
+Windowsのタスクスケジューラで、run_daily.batを毎日1回実行するタスクを登録します。
+
+実行時刻には、PCが起動していてインターネットに接続できる必要があります。スリープ中の実行はタスクとPCの設定に依存します。
+
+GitHubにコードを置くだけでは、自動実行されません。
+
+## 注意事項
+
+- 公開ページで確認できる情報を対象にします。
+- 会員価格、契約価格、ログイン後の情報は対象外です。
+- サイトの構造変更やアクセス制限により、取得できない場合があります。
+- 取得できない情報を、在庫なしや価格0円と判断しないでください。
+- 税込・税別、送料、販売単位は購入前に商品ページで確認してください。
+- 納期は配送先や注文時刻によって変わる場合があります。
+- 各サイトの利用規約とアクセス方針に従い、過剰なアクセスを避けてください。
+- アクセス制限や認証を回避する用途では使用しないでください。
+
+## 公開時の注意
+
+パスワード、APIキー、認証情報、社内情報、個人情報を登録しないでください。
+
+実際の購入リスト、出力されたExcel・CSV、ログ、Boxの共有URLなども、公開前に内容を確認してください。
+
+## 開発状況
+
+整備中です。READMEに記載されたファイルがそろってから実行してください。すべての商品・サイトへの対応を保証するものではありません。
+
+## 免責事項
+
+取得結果の正確性・完全性・最新性は保証しません。購入判断には販売サイトの最新情報を確認してください。
+
+## ライセンス
+
+MIT License。詳細はLICENSEを参照してください。
