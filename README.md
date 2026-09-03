@@ -41,7 +41,15 @@ run_daily.bat
 
 ## 商品設定
 
-確認対象は`products.csv`に1行ずつ書きます。
+確認対象はローカルのローカルの`products.csv`に1行ずつ書きます。
+
+GitHubには実運用の`products.csv`は置かず、テンプレートとして`products.example.csv`だけを置きます。DL後、最初に次のコマンドでローカル用ファイルを作ってください。
+
+```bat
+copy products.example.csv products.csv
+```
+
+`products.csv`には自分が実際に監視したい商品URLを書きます。このファイルは`.gitignore`で除外しているため、GitHubへ上げない運用です。
 
 主な列は次の通りです。
 
