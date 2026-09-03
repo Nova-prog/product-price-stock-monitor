@@ -525,6 +525,15 @@ def product_from_row(row: dict[str, str]) -> Product:
     )
 
 
+def read_text_with_fallback(path: Path) -> str:
+    for encoding in ("utf-8-sig", "cp932", "utf-8"):
+        try:
+            return path.read_text(encoding=encoding)
+        except UnicodeDecodeError:
+            continue
+    return path.read_text(encoding="utf-8", errors="replace")
+
+
 def load_products(path: Path) -> list[Product]:
     if not path.exists():
         example_path = path.with_name("products.example.csv")
@@ -550,9 +559,9 @@ def load_products(path: Path) -> list[Product]:
                 ]
             )
         raise FileNotFoundError("\n".join(guidance))
-    with path.open("r", encoding="utf-8-sig", newline="") as f:
-        reader = csv.DictReader(f)
-        products = [product_from_row(row) for row in reader]
+    text = read_text_with_fallback(path)
+    reader = csv.DictReader(text.splitlines())
+    products = [product_from_row(row) for row in reader]
     return [p for p in products if p.enabled and p.url and p.site]
 
 
