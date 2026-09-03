@@ -527,7 +527,29 @@ def product_from_row(row: dict[str, str]) -> Product:
 
 def load_products(path: Path) -> list[Product]:
     if not path.exists():
-        raise FileNotFoundError(f"products file not found: {path}")
+        example_path = path.with_name("products.example.csv")
+        guidance = [
+            f"products file not found: {path}",
+            "",
+            "Create your local products.csv before running the monitor.",
+        ]
+        if example_path.exists():
+            guidance.extend(
+                [
+                    f"Example template: {example_path}",
+                    "",
+                    "Windows command:",
+                    f"  copy {example_path.name} {path.name}",
+                ]
+            )
+        else:
+            guidance.extend(
+                [
+                    "You can also create a starter file with:",
+                    f"  python monitor.py --init-sample --products {path.name}",
+                ]
+            )
+        raise FileNotFoundError("\n".join(guidance))
     with path.open("r", encoding="utf-8-sig", newline="") as f:
         reader = csv.DictReader(f)
         products = [product_from_row(row) for row in reader]
