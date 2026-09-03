@@ -1,0 +1,5 @@
+enabled,group,category,site,name,url,product_code,manufacturer,manufacturer_code,jan,cas,grade,capacity,unit,quantity,quantity_unit,expected_price_type,expected_tax_status,notes
+true,kimwipes-s200,lab_consumable,monotaro,Kimwipes S-200 Monotaro sample,https://www.monotaro.com/p/0582/8462/,05828462,Nippon Paper Crecia,,,,,,1 box,200,sheet,販売価格,税別,Replace with the exact product page before operational use
+false,kimwipes-s200,lab_consumable,askul,Kimwipes S-200 Askul sample,https://www.askul.co.jp/,,,,,,,,1 box,200,sheet,販売価格,,Replace with exact Askul product URL and enable
+false,reagent-example,reagent,kanto,Kanto reagent sample,https://cica-web.kanto.co.jp/,,,,,example CAS,,example capacity,1 bottle,,,定価,,Replace with exact Cica-Web product URL and enable
+false,reagent-example,reagent,wako,Wako reagent sample,https://labchem-wako.fujifilm.com/jp/,,,,,example CAS,,example capacity,1 bottle,,,希望納入価格,,Replace with exact Wako product URL and enable
