@@ -27,8 +27,15 @@ python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-## 実行方法
+## 文字化け対策
 
+`products.example.csv`は文字化けしにくいように英数字中心で作っています。
+
+`products.csv`をExcelで編集して保存した場合、PCによってはShift-JIS形式になることがあります。`monitor.py`はUTF-8とShift-JISの両方を読むようにしています。
+
+コマンドプロンプトでCSVを`type`表示したとき、先頭に`・ｿ`のような文字が出ることがあります。これはUTF-8 BOMの表示で、Excel出力や取得処理の失敗ではありません。
+
+## 実行方法
 ```bat
 .venv\Scripts\python.exe monitor.py
 ```
@@ -69,8 +76,8 @@ copy products.example.csv products.csv
 | capacity | 容量 |
 | unit | 購入単位 |
 | quantity / quantity_unit | 単価計算用の数量と単位 |
-| expected_price_type | 例：販売価格、定価、希望納入価格 |
-| expected_tax_status | 例：税別、税込 |
+| expected_price_type | 例：`selling_price`、`list_price`、`suggested_delivery_price`など |
+| expected_tax_status | 例：`tax_excluded`、`tax_included` |
 
 モノタロウとアスクルを比較したい場合は、同じ`group`を付けます。ただし、同じ`group`に入れる前に、型番、JAN、容量、入数が本当に同じか確認してください。
 
